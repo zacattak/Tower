@@ -1,7 +1,7 @@
 <template>
   <div class="text-center">
   <!-- <h1></h1> -->
-    <img class="rounded" src="src/assets/img/horse.jpg" />
+    <!-- <img class="rounded" src="src/assets/img/horse.jpg" /> -->
   
   </div>
 </template>

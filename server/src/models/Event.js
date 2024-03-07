@@ -12,28 +12,30 @@ export const EventSchema = new Schema({
     isCanceled: { type: Boolean, required: true },
     type: { type: String, enum: ['concert', 'convention', 'sport', 'digital'], required: true, default: 'convention' }
 
-})
-
-EventSchema.virtual('creator', {
-    localField: 'creatorId',
-
-    ref: 'Account',
-
-    foreignField: '_id',
+}, { timestamps: true, toJSON: { virtuals: true } })
 
 
-    justOne: true
 
-})
+// EventSchema.virtual('creator', {
+//     localField: 'creatorId',
 
-EventSchema.virtual('ticketCount', {
-    localField: '_id',
+//     ref: 'Account',
 
-    ref: '',
-
-    foreignField: 'Event',
+//     foreignField: '_id',
 
 
-    count: true
+//     justOne: true
 
-})
+// })
+
+// EventSchema.virtual('ticketCount', {
+//     localField: '_id',
+
+//     ref: '',
+
+//     foreignField: 'Event',
+
+
+//     count: true
+
+// })

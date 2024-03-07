@@ -1,8 +1,8 @@
 <template>
-  <div class="about text-center">
-    <h1>Welcome {{ account.name }}</h1>
-    <img class="rounded" :src="account.picture" alt="" />
-    <p>{{ account.email }}</p>
+  <div class="text-center">
+  <!-- <h1></h1> -->
+    <img class="rounded" src="src/assets/img/horse.jpg" />
+  
   </div>
 </template>
 

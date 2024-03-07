@@ -21,4 +21,15 @@ export class EventsController extends BaseController {
             next(error)
         }
     }
+
+    async getEvents(request, response, next) {
+        try {
+            const events = await eventsService.getEvents()
+            response.send(events)
+        } catch (error) {
+            next(error)
+        }
+    }
+
+
 }

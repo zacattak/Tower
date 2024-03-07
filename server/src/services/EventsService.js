@@ -11,6 +11,12 @@ class EventsService {
         const events = await dbContext.Events.find()
         return events
     }
+
+    async getEventById(eventId) {
+        const event = await dbContext.Events.findById(eventId)
+        if (!event) throw new Error(`no event with id: ${eventId}`)
+        return event
+    }
 }
 
 export const eventsService = new EventsService()

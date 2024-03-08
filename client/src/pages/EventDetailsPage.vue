@@ -1,15 +1,41 @@
 <template>
 
-<section class="row">
+    <section class="row" v-if="event">
 
-    <h1 class="text-center">Event Details</h1>
+        <h1 class="text-center">Event Details</h1>
 
-    <div class="col-6">
-        <p>{{ event.name }}</p> 
-        <img :src="event.coverImg" :alt="event.name" class="img-fluid">
-    </div>
 
-</section>
+        <div v-if="event.isCanceled">
+            This event has been canceled
+        </div>
+
+        <div v-if="!event.isCanceled && account.id == event.creatorId">
+            <!-- TODO allow me to cancel the event -->
+        </div>
+
+        <div v-if="!event.isCanceled">
+            <!-- TODO need a button to get a ticket -->
+        </div>
+
+
+
+
+
+        <div class="col-6">
+            <p>{{ event.name }}</p>
+
+
+            <p>Tickets: {{ event.ticketCount }}/{{ event.capacity }}</p>
+            <img :src="event.coverImg" :alt="event.name" class="img-fluid">
+        </div>
+
+
+
+
+
+        <!-- TODO get and show comments -->
+
+    </section>
 
 </template>
 
@@ -17,18 +43,18 @@
 <script>
 import { AppState } from '../AppState.js'
 import { computed, onMounted } from 'vue'
-import {useRoute} from 'vue-router'
+import { useRoute } from 'vue-router'
 import { eventsService } from '../services/EventsService.js'
 
 
 export default {
-    setup(){
+    setup() {
         const route = useRoute()
-        onMounted(()=>{
+        onMounted(() => {
             getEventById()
         })
 
-        async function getEventById(){
+        async function getEventById() {
             try {
                 await eventsService.getEventById(route.params.eventId)
             } catch (error) {
@@ -37,13 +63,13 @@ export default {
         }
 
         return {
-            event: computed (()=>AppState.activeEvent)
+            event: computed(() => AppState.activeEvent),
+            account: computed(() => AppState.account),
+            // TODO isSoldOut == ticketCount compared to the event capacity
         }
     }
 }
 </script>
 
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

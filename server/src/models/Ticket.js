@@ -7,16 +7,16 @@ export const TicketSchema = new Schema({
 }, { timestamps: true, toJSON: { virtuals: true } })
 
 
-// TicketSchema.virtual('profile', {
-//     localField: 'accountId',
+TicketSchema.virtual('profile', {
+    localField: 'accountId',
+    ref: 'Account',
+    foreignField: '_id',
+    justOne: true
+})
 
-//     ref: ''
-
-//     foreignField: '_id',
-
-
-
-//     justOne: ''
-// }
-// )
-
+TicketSchema.virtual('event', {
+    localField: 'eventId',
+    ref: 'Event',
+    foreignField: '_id',
+    justOne: true
+})

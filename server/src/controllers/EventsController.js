@@ -10,11 +10,12 @@ export class EventsController extends BaseController {
         this.router
             .get('', this.getEvents)
             .get('/:eventId', this.getEventById)
+            .get('/:eventId/tickets', this.getEventTickets)
+            // TODO get Event Comments
             .use(Auth0Provider.getAuthorizedUserInfo)
             .post('', this.createEvent)
             .put('/:eventId', this.editEvent)
             .delete('/:eventId', this.deleteEvent)
-            .get('/:eventId/tickets', this.getEventTickets)
     }
 
     async createEvent(request, response, next) {

@@ -12,6 +12,13 @@ class AccountService {
       logger.error('HAVE YOU STARTED YOUR SERVER YET???', err)
     }
   }
+
+  // TODO fire off request to account/tickets
+  async getMyTickets() {
+
+  }
+
+
 }
 
 export const accountService = new AccountService()

@@ -16,26 +16,16 @@ export const EventSchema = new Schema({
 
 
 
-// EventSchema.virtual('creator', {
-//     localField: 'creatorId',
+EventSchema.virtual('creator', {
+    localField: 'creatorId',
+    ref: 'Account',
+    foreignField: '_id',
+    justOne: true
+})
 
-//     ref: 'Account',
-
-//     foreignField: '_id',
-
-
-//     justOne: true
-
-// })
-
-// EventSchema.virtual('ticketCount', {
-//     localField: '_id',
-
-//     ref: '',
-
-//     foreignField: 'Event',
-
-
-//     count: true
-
-// })
+EventSchema.virtual('ticketCount', {
+    localField: '_id',
+    ref: 'Ticket',
+    foreignField: 'eventId',
+    count: true
+})

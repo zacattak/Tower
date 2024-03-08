@@ -4,17 +4,18 @@ import { Forbidden } from "../utils/Errors.js"
 class EventsService {
     async createEvent(eventData) {
         const event = await dbContext.Events.create(eventData)
-        // await event.populate('creator', 'name creator')
+        await event.populate('ticketCount')
+        await event.populate('creator', 'name picture')
         return event
     }
 
     async getEvents() {
-        const events = await dbContext.Events.find()
+        const events = await dbContext.Events.find().populate('creator', 'name picture').populate('ticketCount')
         return events
     }
 
     async getEventById(eventId) {
-        const event = await dbContext.Events.findById(eventId)
+        const event = await dbContext.Events.findById(eventId).populate('creator', 'name picture').populate('ticketCount')
         if (!event) throw new Error(`no event with id: ${eventId}`)
         return event
     }
@@ -22,8 +23,10 @@ class EventsService {
     async editEvent(eventId, eventData, userId) {
         const eventToEdit = await this.getEventById(eventId)
 
+        // TODO do not allow me to edit the event if the event has been canceled
+
         if (eventToEdit.creatorId != userId) {
-            throw new Forbidden("NO PERMISSION!")
+            throw new Forbidden("You can't edit this event because its not yours")
         }
         eventToEdit.name = eventData.name || eventToEdit.name
 
@@ -36,7 +39,7 @@ class EventsService {
 
     async deleteEvent(eventId, userId) {
         const event = await this.getEventById(eventId)
-        if (event.creatorId != userId) throw new Forbidden('NO NO NO!!')
+        if (event.creatorId.toString() != userId) { throw new Forbidden('NO NO NO!!') }
         event.isCanceled = true
         await event.save()
         return `canceled the ${event.name} event`

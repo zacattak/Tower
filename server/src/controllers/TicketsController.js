@@ -9,6 +9,7 @@ export class TicketsController extends BaseController {
         this.router
             .use(Auth0Provider.getAuthorizedUserInfo)
             .post('', this.createTicket)
+        // TODO DELETE TICKET
 
 
     }

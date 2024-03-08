@@ -3,12 +3,22 @@ import { reactive } from 'vue'
 // NOTE AppState is a reactive object to contain app level data
 export const AppState = reactive({
   user: {},
-  /** @type {import('./models/Account.js').Account} */
+
+  //#region data for the AccountPage
   account: {},
+  // these tickets will have an event
+  myTickets: [],
+  //#endregion
 
   events: [],
 
-  tickets: [],
 
-  activeEvent: null
+  //#region data for the EventDetailsPage
+  activeEvent: null,
+  // these tickets will have a profile
+  tickets: [],
+  comments: []
+
+  //#endregion
+
 })

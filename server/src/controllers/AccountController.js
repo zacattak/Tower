@@ -36,7 +36,7 @@ export class AccountController extends BaseController {
   async getMyTickets(request, response, next) {
     try {
       const userId = request.userInfo.id
-      const myTickets = await ticketsService.getEventTickets(userId)
+      const myTickets = await ticketsService.getMyTickets(userId)
       response.send(myTickets)
     } catch (error) {
       next(error)

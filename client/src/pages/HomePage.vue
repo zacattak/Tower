@@ -1,7 +1,9 @@
 <template>
   <section class="row my-2 g-2">
-
+    <h1 class="text-center">Fun Events</h1>
     <div v-for="event in events" :key="event.id" class="col-6 col-md-4">
+
+      <RouterLink :to="{name: 'Event Details', params:{eventId: event.id}}">
       <div class="border shadow bg-info">
       <img :src="event.coverImg" class="event-magic" :alt="`cover image ${event.name}`">
       <div class="text-light text-center fw-bold p-2">
@@ -11,6 +13,8 @@
         <i class="mdi mdi-ticket"></i>{{ event.ticketCount }}
       </div>
     </div>
+
+    </RouterLink>
     </div>
 
   </section>

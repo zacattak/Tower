@@ -5,7 +5,7 @@
     <h1 class="text-center">Event Details</h1>
 
     <div class="col-6">
-        {{ event.name }}
+        <p>{{ event.name }}</p> 
         <img :src="event.coverImg" :alt="event.name" class="img-fluid">
     </div>
 

@@ -1,9 +1,9 @@
 import { Schema } from "mongoose";
 
 export const CommentSchema = new Schema({
-    id: { type: Schema.ObjectId, required: true },
-    creatorId: { type: Schema.ObjectId, required: true },
-    eventId: { type: Schema.ObjectId, required: true },
+    // id: { type: Schema.ObjectId },
+    creatorId: { type: Schema.ObjectId, ref: 'Account' },
+    eventId: { type: Schema.ObjectId },
     body: { type: String, required: true },
 }, { timestamps: true, toJSON: { virtuals: true } })
 

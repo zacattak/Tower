@@ -13,7 +13,7 @@ export class CommentsController extends BaseController {
     async createComment(request, response, next) {
         try {
             const commentData = request.body
-            commentData.accountId = request.userInfo.id
+            commentData.creatorId = request.userInfo.id
             const comment = await commentsService.createComment(commentData)
             response.send(comment)
         } catch (error) {

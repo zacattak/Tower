@@ -45,6 +45,7 @@ import { AppState } from '../AppState.js'
 import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { eventsService } from '../services/EventsService.js'
+import Pop from '../utils/Pop'
 
 
 export default {

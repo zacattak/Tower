@@ -3,7 +3,7 @@
     <h1 class="text-center">Fun Events</h1>
 
     <!-- TODO filterEvents  -->
-
+    <EventForm />
 
     <div v-for="event in events" :key="event.id" class="col-6 col-md-4">
 

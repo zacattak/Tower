@@ -44,6 +44,13 @@ class EventsService {
         await event.save()
         return `canceled the ${event.name} event`
     }
+    // async getTicket(eventId, userId) {
+    //     const event = await this.getEventById(eventId)
+    //     // if (event.creatorId != userId) throw new Forbidden
+    //     event.attending = true
+    //     await event.save()
+    //     return 'attending event'
+    // }
 }
 
 export const eventsService = new EventsService()

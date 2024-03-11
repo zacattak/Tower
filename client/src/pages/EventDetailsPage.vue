@@ -13,8 +13,11 @@
             <!-- TODO allow me to cancel the event -->
         </div>
 
-        <div v-if="!event.isCanceled">
+        <div v-if="!event.attending">
             <!-- TODO need a button to get a ticket -->
+            <button @click="createTicket()" class="btn btn-success" type="button">
+                <i class="mdi mdi-close-circle me-1"></i>Get ticket!
+            </button>
         </div>
 
 
@@ -22,7 +25,7 @@
 
 
         <div class="col-6">
-            <p>{{ event.name }}</p>
+            <p :class="{ 'text-danger': event.attending }">{{ event.name }}</p>
 
 
             <p>Tickets: {{ event.ticketCount }}/{{ event.capacity }}</p>
@@ -49,9 +52,11 @@
 
 <script>
 import { AppState } from '../AppState.js'
+
 import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { eventsService } from '../services/EventsService.js'
+import { ticketsService } from '../services/TicketsService.js'
 import Pop from '../utils/Pop'
 
 
@@ -71,10 +76,36 @@ export default {
         }
 
         return {
+            route,
             event: computed(() => AppState.activeEvent),
             account: computed(() => AppState.account),
+            tickets: computed(() => AppState.tickets),
+
+
+            // attending: computed(())
             // TODO isSoldOut == ticketCount compared to the event capacity
+            async createTicket() {
+                try {
+                    const eventData = { eventId: route.params.eventId }
+                    await ticketsService.createTicket(eventData)
+                } catch (error) {
+                    Pop.error(error)
+                }
+            }
+
+
+
+
+
+
+
+
+
+
+
         }
+
+
     }
 }
 </script>

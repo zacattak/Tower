@@ -24,6 +24,8 @@ class EventsService {
         AppState.events.push(newEvent)
         return newEvent
     }
+
+
 }
 
 export const eventsService = new EventsService()

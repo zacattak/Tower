@@ -95,6 +95,17 @@ export class EventsController extends BaseController {
         }
     }
 
+    // async getTicket(request, response, next) {
+    //     try {
+    //         const eventId = request.params.eventId
+    //         const userId = request.userInfo.id
+    //         const message = await eventsService.getTicket(eventId, userId)
+    //         response.send(message)
+    //     } catch (error) {
+    //         next(error)
+    //     }
+    // }
+
 
 
 }

@@ -10,7 +10,9 @@ export const EventSchema = new Schema({
     capacity: { type: Number, required: true, minLength: 1, maxLength: 5000 },
     startDate: { type: Date, required: true },
     isCanceled: { type: Boolean, default: false },
-    type: { type: String, enum: ['concert', 'convention', 'sport', 'digital'], required: true, default: 'convention' }
+    type: { type: String, enum: ['concert', 'convention', 'sport', 'digital'], required: true, default: 'convention' },
+    attending: { type: Boolean, default: false },
+
 
 }, { timestamps: true, toJSON: { virtuals: true } })
 

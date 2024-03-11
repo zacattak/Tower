@@ -20,7 +20,9 @@ class EventsService {
     async createEvent(eventData) {
         const response = await api.post('api/events', eventData)
         logger.log('CREATED EVENT', response.data)
-        AppState.events.push(new Event(response.data))
+        const newEvent = new Event(response.data)
+        AppState.events.push(newEvent)
+        return newEvent
     }
 }
 

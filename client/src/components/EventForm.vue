@@ -40,7 +40,7 @@
 
         <div class="form-floating mb-3">
             <select v-model="editableEventData.type" class="form-select" id="type"
-                aria-label="Floating label select example">
+                aria-label="Floating label select example" required>
                 <option v-for="type in types" :key="type" :value="type">{{ type }}</option>
             </select>
             <label for="type">Type</label>
@@ -58,11 +58,14 @@
 import { ref } from 'vue'
 import { eventsService } from '../services/EventsService.js'
 import Pop from '../utils/Pop.js'
+import { useRouter } from 'vue-router'
 export default {
     setup() {
 
 
         const editableEventData = ref({ name: '', description: '', startDate: '', capacity: '', location: '', coverImg: '', type: 'convention' })
+
+        const router = useRouter()
 
         return {
             editableEventData,
@@ -70,8 +73,10 @@ export default {
 
             async createEvent() {
                 try {
-                    await eventsService.createEvent(editableEventData.value)
+                    const event = await eventsService.createEvent(editableEventData.value)
                     editableEventData.value = { name: '', description: '', startDate: '', capacity: '', location: '', coverImg: '', type: 'convention' }
+
+                    router.push({ name: 'Event Details', params: { eventId: event.id } })
                 } catch (error) {
                     Pop.error(error)
                 }

@@ -56,6 +56,13 @@
 
         </div>
 
+        <div v-for="ticket in tickets">
+            TICKET HOLDERS:
+            <p>{{ ticket.profile.name }}</p>
+            <img :src="ticket.profile.picture">
+
+        </div>
+
 
         <div v-for="comment in comments" :key="comment.id">
             Comment Author: {{ comment.creator.name }},

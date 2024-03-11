@@ -64,6 +64,21 @@
             <button @click="deleteComment(comment.id)">DELETE COMMENT</button>
         </div>
 
+        <form @submit.prevent="createComment()">
+
+            <!-- <div class="form-floating mb-3">
+                <input v-model="editableCommentData.creator" type="text" class="form-control" id="creator"
+                    placeholder="Comment" minlength="3" maxlength="50" required>
+                <label for="creator">Name</label>
+            </div> -->
+
+            <div class="form-floating mb-3">
+                <input v-model="editableCommentData.body" type="text" class="form-control" id="body"
+                    placeholder="Comment Body" minlength="3" maxlength="50" required>
+                <label for="body">Body</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
 
         <!-- TODO get and show comments -->
 
@@ -75,7 +90,7 @@
 <script>
 import { AppState } from '../AppState.js'
 
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { eventsService } from '../services/EventsService.js'
 import { ticketsService } from '../services/TicketsService.js'
@@ -85,6 +100,7 @@ import Pop from '../utils/Pop'
 
 export default {
     setup() {
+        const editableCommentData = ref({ creator: '', body: '', eventId: '' })
         const route = useRoute()
         onMounted(() => {
             getEventById()
@@ -127,6 +143,7 @@ export default {
 
         return {
             // route,
+            editableCommentData,
             event: computed(() => AppState.activeEvent),
             account: computed(() => AppState.account),
             tickets: computed(() => AppState.tickets),
@@ -172,6 +189,18 @@ export default {
 
                     if (!yes) return
                     await commentsService.deleteComment(commentId)
+                } catch (error) {
+                    Pop.error(error)
+                }
+            },
+
+            async createComment() {
+                try {
+                    const commentData = editableCommentData.value
+                    const eventId = route.params.eventId
+                    commentData.eventId = eventId.toString()
+                    await commentsService.createComment(commentData)
+
                 } catch (error) {
                     Pop.error(error)
                 }

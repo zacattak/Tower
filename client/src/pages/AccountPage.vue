@@ -5,25 +5,51 @@
 
 
     <!-- TODO show all myTickets -->
-    <div v-for="ticket in tickets">
-      <div>{{ ticket }}</div>
+    <div v-for="ticket in tickets" :key="ticket.id">
+      <p>{{ ticket.event.description }}</p>
+      <img :src="ticket.event.coverImg">
+
+      <button @click="deleteTicket(ticket.id)" class="btn btn-success" type="button">Get rid of ticket!</button>
+
     </div>
 
   </div>
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState';
+import { ticketsService } from '../services/TicketsService';
+import Pop from '../utils/Pop';
 export default {
   setup() {
 
     // TODO go get my Tickets
+    onMounted(() => {
+      getMyEventTickets()
+    })
 
+    async function getMyEventTickets() {
+      try {
+        await ticketsService.getMyEventTickets()
+      } catch (error) {
+        Pop.error(error)
+      }
+    }
 
     return {
       account: computed(() => AppState.account),
-      tickets: computed(() => AppState.myTickets)
+      tickets: computed(() => AppState.myTickets),
+
+      async deleteTicket(ticketId) {
+        try {
+          const yes = await Pop.confirm()
+          if (!yes) return
+          await ticketsService.deleteTicket(ticketId)
+        } catch (error) {
+          Pop.error(error)
+        }
+      }
     }
   }
 }

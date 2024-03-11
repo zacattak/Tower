@@ -26,9 +26,9 @@
             </button>
         </div>
 
-        <div>
+        <!-- <div>
             <button @click="deleteTicket()" class="btn btn-success" type="button">Get rid of ticket!</button>
-        </div>
+        </div> -->
 
         <!-- <li v-if="event.creatorId == account.id">
             <button @click="deleteEvent()" class="btn btn-success" type="button" :disabled="event.isCanceled">
@@ -82,6 +82,8 @@ export default {
         const route = useRoute()
         onMounted(() => {
             getEventById()
+            getTicketsByEventId()
+            // getMyEventTickets()
         })
 
         async function getEventById() {
@@ -92,11 +94,29 @@ export default {
             }
         }
 
+        async function getTicketsByEventId() {
+            try {
+                await ticketsService.getTicketsByEventId(route.params.eventId)
+            } catch (error) {
+                Pop.error(error)
+            }
+        }
+
+        // async function getMyEventTickets() {
+        //     try {
+        //         await ticketsService.getMyEventTickets()
+        //     } catch (error) {
+        //         Pop.error(error)
+        //     }
+        // }
+
         return {
             route,
             event: computed(() => AppState.activeEvent),
             account: computed(() => AppState.account),
             tickets: computed(() => AppState.tickets),
+
+            // myTickets: computed(() => AppState.myTickets),
 
 
             // attending: computed(())
@@ -120,11 +140,11 @@ export default {
                 }
             },
 
-            async deleteTicket(ticketId) {
+            async deleteTicket(myTicketId) {
                 try {
                     const yes = await Pop.confirm()
                     if (!yes) return
-                    await ticketsService.deleteTicket(ticketId)
+                    await ticketsService.deleteTicket(myTicketId)
                 } catch (error) {
                     Pop.error(error)
                 }

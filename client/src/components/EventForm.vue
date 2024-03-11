@@ -9,9 +9,33 @@
         </div>
 
         <div class="form-floating mb-3">
+            <input v-model="editableEventData.description" type="text" class="form-control" id="description"
+                placeholder="Event Description" minlength="3" maxlength="50" required>
+            <label for="description">Description</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input v-model="editableEventData.startDate" type="text" class="form-control" id="startDate"
+                placeholder="Event Start Date" minlength="3" maxlength="50" required>
+            <label for="startDate">Start Date</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input v-model="editableEventData.capacity" type="text" class="form-control" id="capacity"
+                placeholder="Capacity" minlength="1" maxlength="50" required>
+            <label for="capacity">Capacity</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input v-model="editableEventData.location" type="text" class="form-control" id="location"
+                placeholder="location" minlength="1" maxlength="50" required>
+            <label for="location">Location</label>
+        </div>
+
+        <div class="form-floating mb-3">
             <input v-model="editableEventData.coverImg" type="url" class="form-control" id="coverImg"
                 placeholder="coverImg" minlength="5" maxlength="1000" required>
-            <label for="coverImg">coverImg</label>
+            <label for="coverImg">Cover Image</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -33,20 +57,21 @@
 <script>
 import { ref } from 'vue'
 import { eventsService } from '../services/EventsService.js'
-import Pop from 'utils/Pop.js'
+import Pop from '../utils/Pop.js'
 export default {
     setup() {
 
 
-        const editableEventData = ref({})
+        const editableEventData = ref({ name: '', description: '', startDate: '', capacity: '', location: '', coverImg: '', type: 'convention' })
 
         return {
             editableEventData,
-            categories: ['concert', 'convention', 'sport', 'digital'],
+            types: ['concert', 'convention', 'sport', 'digital'],
 
             async createEvent() {
                 try {
                     await eventsService.createEvent(editableEventData.value)
+                    editableEventData.value = { name: '', description: '', startDate: '', capacity: '', location: '', coverImg: '', type: 'convention' }
                 } catch (error) {
                     Pop.error(error)
                 }

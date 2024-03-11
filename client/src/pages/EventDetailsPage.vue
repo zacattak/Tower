@@ -19,7 +19,7 @@
 
         </div>
 
-        <div class="text-center" v-if="!event.attending">
+        <div class="text-center" v-if="!event.attending && event.ticketCount < event.capacity">
             <!-- TODO need a button to get a ticket -->
             <button @click="createTicket()" class="btn btn-success" type="button" :disabled="event.isCanceled">
                 <i class="mdi mdi-close-circle me-1"></i>Get ticket!

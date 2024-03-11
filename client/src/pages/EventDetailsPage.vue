@@ -60,7 +60,7 @@
         <div v-for="comment in comments" :key="comment.id">
             Comment Author: {{ comment.creator.name }},
             Body: {{ comment.body }},
-            Picture: {{ comment.creator.coverImg }}
+            <img :src="comment.creator.picture">
             <button @click="deleteComment(comment.id)">DELETE COMMENT</button>
         </div>
 

@@ -3,10 +3,12 @@
     <!-- <h1></h1> -->
     <img class="rounded" :src="account.picture" />
 
-
+    <h1>Tickets</h1>
     <!-- TODO show all myTickets -->
     <div v-for="ticket in tickets" :key="ticket.id">
       <p>{{ ticket.event.description }}</p>
+      <p>{{ ticket.event.location }}</p>
+      <p>{{ ticket.event.startDate }}</p>
       <img :src="ticket.event.coverImg">
 
       <button @click="deleteTicket(ticket.id)" class="btn btn-success" type="button">Get rid of ticket!</button>

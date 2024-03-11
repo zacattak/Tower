@@ -1,6 +1,10 @@
 <template>
   <section class="row my-2 g-2">
     <h1 class="text-center">Fun Events</h1>
+    <div class="col-12 d-flex justify-content-between"></div>
+    <button v-for="type in types" :key="type" @click="changeFilterTerm(type)">
+      {{ type }}
+    </button>
 
     <!-- TODO filterEvents  -->
     <EventForm />
@@ -28,7 +32,7 @@
 </template>
 
 <script>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { AppState } from '../AppState';
 import { eventsService } from '../services/EventsService.js'
 import Pop from '../utils/Pop';
@@ -36,7 +40,7 @@ import Pop from '../utils/Pop';
 
 export default {
   setup() {
-
+    const filterTerm = ref('all')
     // TODO create Event Form
 
 
@@ -49,7 +53,18 @@ export default {
       }
     }
     return {
-      events: computed(() => AppState.events)
+      filterTerm,
+      changeFilterTerm(term) {
+        filterTerm.value = term
+      },
+      types: ['all', 'concert', 'convention', 'sport', 'digital'],
+      events: computed(() => {
+        if (filterTerm.value == 'all') {
+          return AppState.events
+        } else {
+          return AppState.events.filter(event => event.type == filterTerm.value)
+        }
+      })
     }
   }
 }

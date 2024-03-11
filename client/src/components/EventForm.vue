@@ -46,9 +46,9 @@
             <label for="type">Type</label>
         </div>
 
-        <div class="text-end">
+        <li v-if="account.id">
             <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
+        </li>
     </form>
 
 </template>
@@ -59,6 +59,8 @@ import { ref } from 'vue'
 import { eventsService } from '../services/EventsService.js'
 import Pop from '../utils/Pop.js'
 import { useRouter } from 'vue-router'
+import { AppState } from '../AppState.js'
+import { computed } from 'vue'
 export default {
     setup() {
 
@@ -69,6 +71,9 @@ export default {
 
         return {
             editableEventData,
+
+            account: computed(() => AppState.account),
+
             types: ['concert', 'convention', 'sport', 'digital'],
 
             async createEvent() {

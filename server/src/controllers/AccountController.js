@@ -10,7 +10,7 @@ export class AccountController extends BaseController {
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('', this.getUserAccount)
       .put('', this.editUserAccount)
-      .get('/tickets', this.getMyTickets)
+      .get('/tickets', this.getTicketsForEvent)
   }
 
   async getUserAccount(req, res, next) {
@@ -33,11 +33,11 @@ export class AccountController extends BaseController {
     }
   }
 
-  async getMyTickets(request, response, next) {
+  async getTicketsForEvent(request, response, next) {
     try {
       const userId = request.userInfo.id
-      const myTickets = await ticketsService.getMyTickets(userId)
-      response.send(myTickets)
+      const eventTickets = await ticketsService.getTicketsForEvent(userId)
+      response.send(eventTickets)
     } catch (error) {
       next(error)
     }

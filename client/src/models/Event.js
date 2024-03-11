@@ -1,3 +1,5 @@
+import { Account } from "./Account"
+
 export class Event {
     constructor(data) {
         this.id = data.id || data._id
@@ -12,5 +14,6 @@ export class Event {
         this.type = data.type
         this.ticketCount = data.ticketCount
         this.attending = data.attending
+        this.creator = data.creator ? new Account(data.creator) : null
     }
 }

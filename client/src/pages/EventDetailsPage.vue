@@ -9,16 +9,32 @@
             This event has been canceled
         </div>
 
-        <div v-if="!event.isCanceled && account.id == event.creatorId">
+        <div class="text-center" v-if="!event.isCanceled && account.id == event.creatorId">
             <!-- TODO allow me to cancel the event -->
+
+            <button @click="deleteEvent()" class="btn btn-success" type="button" :disabled="event.isCanceled">
+                <i class="mdi mdi-close-circle me-1"></i>delete event
+            </button>
+
+
         </div>
 
-        <div v-if="!event.attending">
+        <div class="text-center" v-if="!event.attending">
             <!-- TODO need a button to get a ticket -->
-            <button @click="createTicket()" class="btn btn-success" type="button">
+            <button @click="createTicket()" class="btn btn-success" type="button" :disabled="event.isCanceled">
                 <i class="mdi mdi-close-circle me-1"></i>Get ticket!
             </button>
         </div>
+
+        <div>
+            <button @click="deleteTicket()" class="btn btn-success" type="button">Get rid of ticket!</button>
+        </div>
+
+        <!-- <li v-if="event.creatorId == account.id">
+            <button @click="deleteEvent()" class="btn btn-success" type="button" :disabled="event.isCanceled">
+                <i class="mdi mdi-close-circle me-1"></i>delete event
+            </button>
+        </li> -->
 
 
 
@@ -27,6 +43,7 @@
         <div class="col-6">
             <p :class="{ 'text-danger': event.attending }">{{ event.name }}</p>
 
+            <p>Attending Event? {{ event.attending }}</p>
 
             <p>Tickets: {{ event.ticketCount }}/{{ event.capacity }}</p>
             <img :src="event.coverImg" :alt="event.name" class="img-fluid">
@@ -88,6 +105,26 @@ export default {
                 try {
                     const eventData = { eventId: route.params.eventId }
                     await ticketsService.createTicket(eventData)
+                } catch (error) {
+                    Pop.error(error)
+                }
+            },
+            async deleteEvent() {
+                try {
+                    const event = AppState.activeEvent
+                    const wantsToDelete = await Pop.confirm('Are you sure?')
+                    if (!wantsToDelete) { return }
+                    await eventsService.deleteEvent(event.id)
+                } catch (error) {
+                    Pop.error(error)
+                }
+            },
+
+            async deleteTicket(ticketId) {
+                try {
+                    const yes = await Pop.confirm()
+                    if (!yes) return
+                    await ticketsService.deleteTicket(ticketId)
                 } catch (error) {
                     Pop.error(error)
                 }

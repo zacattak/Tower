@@ -39,7 +39,7 @@ class EventsService {
 
     async deleteEvent(eventId, userId) {
         const event = await this.getEventById(eventId)
-        if (event.creatorId.toString() != userId) { throw new Forbidden('NO NO NO!!') }
+        if (event.creatorId.toString() != userId) { throw new Forbidden('no permission') }
         event.isCanceled = true
         await event.save()
         return `canceled the ${event.name} event`

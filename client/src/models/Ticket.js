@@ -1,4 +1,4 @@
-import { Event } from "./Event"
+import { Event } from "./Event.js"
 
 export class Ticket {
     constructor(data) {
@@ -6,7 +6,7 @@ export class Ticket {
         this.eventId = data.eventId
         this.accountId = data.accountId
         this.profile = data.profile
-        this.event = data.event
+        this.event = data.event ? new Event(data.event) : null
 
     }
 }

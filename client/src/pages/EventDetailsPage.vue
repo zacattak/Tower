@@ -27,6 +27,13 @@
 
             <p>Tickets: {{ event.ticketCount }}/{{ event.capacity }}</p>
             <img :src="event.coverImg" :alt="event.name" class="img-fluid">
+            <p>{{ event.description }}</p>
+            <p>{{ event.location }}</p>
+            <p>{{ event.startDate }}</p>
+            <p>{{ event.type }}</p>
+        </div>
+        <div class="col-6">
+
         </div>
 
 

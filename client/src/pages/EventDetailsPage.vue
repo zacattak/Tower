@@ -57,7 +57,12 @@
         </div>
 
 
-
+        <div v-for="comment in comments" :key="comment.id">
+            Comment Author: {{ comment.creator.name }},
+            Body: {{ comment.body }},
+            Picture: {{ comment.creator.coverImg }}
+            <button @click="deleteComment(comment.id)">DELETE COMMENT</button>
+        </div>
 
 
         <!-- TODO get and show comments -->
@@ -74,6 +79,7 @@ import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { eventsService } from '../services/EventsService.js'
 import { ticketsService } from '../services/TicketsService.js'
+import { commentsService } from '../services/CommentsService.js'
 import Pop from '../utils/Pop'
 
 
@@ -83,7 +89,8 @@ export default {
         onMounted(() => {
             getEventById()
             getTicketsByEventId()
-            // getMyEventTickets()
+            getCommentsByEventId()
+
         })
 
         async function getEventById() {
@@ -102,6 +109,14 @@ export default {
             }
         }
 
+        async function getCommentsByEventId() {
+            try {
+                await commentsService.getCommentsByEventId(route.params.eventId)
+            } catch (error) {
+                Pop.error(error)
+            }
+        }
+
         // async function getMyEventTickets() {
         //     try {
         //         await ticketsService.getMyEventTickets()
@@ -111,10 +126,11 @@ export default {
         // }
 
         return {
-            route,
+            // route,
             event: computed(() => AppState.activeEvent),
             account: computed(() => AppState.account),
             tickets: computed(() => AppState.tickets),
+            comments: computed(() => AppState.comments),
 
             // myTickets: computed(() => AppState.myTickets),
 
@@ -145,6 +161,17 @@ export default {
                     const yes = await Pop.confirm()
                     if (!yes) return
                     await ticketsService.deleteTicket(myTicketId)
+                } catch (error) {
+                    Pop.error(error)
+                }
+            },
+
+            async deleteComment(commentId) {
+                try {
+                    const yes = await Pop.confirm
+
+                    if (!yes) return
+                    await commentsService.deleteComment(commentId)
                 } catch (error) {
                     Pop.error(error)
                 }

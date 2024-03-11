@@ -25,6 +25,11 @@ class EventsService {
 
         // TODO do not allow me to edit the event if the event has been canceled
 
+        if (eventToEdit.isCanceled) {
+            throw new Forbidden("You can't do that!!")
+        }
+
+
         if (eventToEdit.creatorId != userId) {
             throw new Forbidden("You can't edit this event because its not yours")
         }

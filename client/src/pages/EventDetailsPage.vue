@@ -43,7 +43,7 @@
         <div class="col-6">
             <p :class="{ 'text-danger': event.attending }">{{ event.name }}</p>
 
-            <p>Attending Event? {{ event.attending }}</p>
+            <p v-if="isAttending">You have a ticket for this event!!!!</p>
 
             <p>Tickets: {{ event.ticketCount }}/{{ event.capacity }}</p>
             <img :src="event.coverImg" :alt="event.name" class="img-fluid">
@@ -155,6 +155,7 @@ export default {
             account: computed(() => AppState.account),
             tickets: computed(() => AppState.tickets),
             comments: computed(() => AppState.comments),
+            isAttending: computed(() => AppState.tickets.find(t => t.accountId == AppState.account.id)),
 
             // myTickets: computed(() => AppState.myTickets),
 
